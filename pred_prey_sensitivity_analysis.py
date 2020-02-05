@@ -35,7 +35,12 @@ for i in range(simulation_steps):
 
     firstVariableSensitivity.append(Si['S1'][0])
     secondVariableSensitivity.append(Si['S1'][1])
-    firstAndSecondVariableSensitivity.append(Si['S2'][0,1])
+    firstAndSecondVariableSensitivity.append(Si['S2'][0, 1])
+
+# mean sensitivity values
+print(sum(firstVariableSensitivity[1:])/len(firstVariableSensitivity[1:]))
+print(sum(secondVariableSensitivity[1:])/len(secondVariableSensitivity[1:]))
+print(sum(firstAndSecondVariableSensitivity[1:])/len(firstAndSecondVariableSensitivity[1:]))
 
 # plot results
 t = np.linspace(start_simulation_time, end_simulation_time, simulation_steps)
