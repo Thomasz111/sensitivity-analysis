@@ -50,44 +50,4 @@ class PredatorPreyModelDA:
             populations_at_step, info_dict = integrate.odeint(self.dX_dt, predator_prey_populations, t, full_output=True)
             populations_at_step = populations_at_step[-proper_sim_steps:]
             x[i] = np.array([populations_at_step[:, 0]])
-        print("+")
         return x
-
-    # This calculates y values for given range of x arguments
-    # def calculate_model(self, a, b, data):
-    #     """Function needed to calculate y values based on passed data as x arguments"""
-    #     a = np.asanyarray(a).reshape((-1, 1))
-    #     b = np.asanyarray(b).reshape((-1, 1))
-    #
-    #     x = (np.sin((2 * np.pi * a * data[:, 0:]) / (23 * b)) +
-    #          np.sin((2 * np.pi * a * data[:, 0:]) / 28) +
-    #          np.sin((2 * np.pi * a * data[:, 0:]) / 33)) * np.log(a * data[:, 0:])
-    #
-    #     return x
-
-    # This is actual function which is passed to ELFI algorithm, it fullfills interface contract
-    # first parameters (a,b,... or more) are model parameters
-    # def model(self, aa, bb, batch_size=1, random_state=None):
-    #     x = np.zeros((100, 200))
-    #     for i in range(100):
-    #         # second_x_data are train data, they are globally defined so they are accessible here
-    #         z = (np.sin((2 * np.pi * aa[i] * self.second_x_data[:, 0:]) / (23 * bb[i])) +
-    #              np.sin((2 * np.pi * aa[i] * self.second_x_data[:, 0:]) / 28) +
-    #              np.sin((2 * np.pi * aa[i] * self.second_x_data[:, 0:]) / 33)) * np.log(aa[i] * self.second_x_data[:, 0:])
-    #         x[i] = z[0]
-    #     # print(x)
-    #     print("----------------------------------")
-    #     return x
-
-    # def model(self, aa, bb, batch_size=1, random_state=None):
-    #     """Function needed to calculate y values based on passed data as x arguments"""
-    #     aa = np.asanyarray(aa).reshape((-1, 1))
-    #     bb = np.asanyarray(bb).reshape((-1, 1))
-    #
-    #     # second_x_data are train data, they are globally defined so they are accessible here
-    #     x = (np.sin((2 * np.pi * aa * self.second_x_data[:, 0:]) / (23 * bb)) +
-    #          np.sin((2 * np.pi * aa * self.second_x_data[:, 0:]) / 28) +
-    #          np.sin((2 * np.pi * aa * self.second_x_data[:, 0:]) / 33)) * np.log(aa * self.second_x_data[:, 0:])
-    #     print(x)
-    #     print("------------------------------")
-    #     return x

@@ -11,8 +11,6 @@ seed = 20170530
 np.random.seed(seed)
 
 # We set true parameters
-# a = 9
-# b = 5
 a = 1.
 b = 0.5
 
@@ -38,10 +36,10 @@ first_x_data, second_x_data, third_x_data = get_three_ranges(first_x_range_start
                                                              number_of_samples,
                                                              full_range)
 
-modell = PredatorPreyModelDA()
+pred_prey_model = PredatorPreyModelDA()
 
 # Plot the observed sequence for whole range
-y_obs = modell.calculate_model(a, b, all_x_range)
+y_obs = pred_prey_model.calculate_model(a, b, all_x_range)
 plt.figure(figsize=(11, 6))
 plt.plot(all_x_range[0, :], y_obs[0, :])
 
@@ -54,7 +52,7 @@ plt.ylabel('Y value of the model')
 
 
 # We plot only training part
-train_data = modell.calculate_model(a, b, second_x_data)
+train_data = pred_prey_model.calculate_model(a, b, second_x_data)
 plt.figure(figsize=(11, 6))
 
 plt.xticks(np.arange(second_x_range_start, second_x_range_stop, 1.0))
@@ -65,13 +63,13 @@ plt.ylabel('Y value of the function')
 plt.show()
 
 # MAGIC
-modell.second_x_data = second_x_data
+pred_prey_model.second_x_data = second_x_data
 
 a_param = elfi.Prior(scipy.stats.uniform, a-width, 2 * width)
 b_param = elfi.Prior(scipy.stats.uniform, b-width, 2 * width)
 
 # Define the simulator node with the MA2 model ,give the priors to it as arguments.
-Y = elfi.Simulator(modell.model, a_param, b_param, observed=train_data)
+Y = elfi.Simulator(pred_prey_model.model, a_param, b_param, observed=train_data)
 
 
 # Autocovariances as the summary statistics
@@ -102,11 +100,11 @@ a_result_last = result.samples['a_param'].mean()
 print(a_result_last)
 print(b_result_last)
 
-y_obs = modell.calculate_model(a, b, second_x_data)
+y_obs = pred_prey_model.calculate_model(a, b, second_x_data)
 
 plt.figure(figsize=(11, 6))
 plt.plot(y_obs.ravel(), label="observed")
-plt.plot(modell.calculate_model(a_result_last, b_result_last, second_x_data).ravel(), label="simulated")
+plt.plot(pred_prey_model.calculate_model(a_result_last, b_result_last, second_x_data).ravel(), label="simulated")
 plt.legend(loc="upper left")
 
 plt.show()
