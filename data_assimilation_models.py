@@ -1,6 +1,8 @@
 import numpy as np
 from scipy import integrate
 
+from simulation_constants import batch_size_c
+
 
 class PredatorPreyModelDA:
     initial_prey_population = 10
@@ -41,8 +43,8 @@ class PredatorPreyModelDA:
         steps = int((end_sim * len(t)) / (end_sim - start_sim))
         t = np.linspace(0, end_sim, steps)
 
-        x = np.zeros((100, 200))
-        for i in range(100):
+        x = np.zeros((batch_size_c, proper_sim_steps))
+        for i in range(batch_size_c):
             self.a = a[i]
             self.b = b[i]
 
@@ -50,4 +52,5 @@ class PredatorPreyModelDA:
             populations_at_step, info_dict = integrate.odeint(self.dX_dt, predator_prey_populations, t, full_output=True)
             populations_at_step = populations_at_step[-proper_sim_steps:]
             x[i] = np.array([populations_at_step[:, 0]])
+        print("x")
         return x

@@ -5,7 +5,8 @@ import matplotlib.pyplot as plt
 
 from data_assimilation_models import PredatorPreyModelDA
 from data_assimilation_utils import get_three_ranges
-from simulation_constants import N, batch_size, width
+from simulation_constants import N, batch_size_c, width, first_x_range, second_x_range, third_x_range, sampling, start, \
+    stop
 
 seed = 20170530
 np.random.seed(seed)
@@ -14,25 +15,15 @@ np.random.seed(seed)
 a = 1.
 b = 0.5
 
-# We define start, stop and sampling for the function
-start = 0
-stop = 100
-sampling = 0.1
 number_of_samples = int(1/sampling)
 
 full_range = np.arange(start, stop, sampling)
 all_x_range = np.array(full_range).reshape((1, len(full_range)))
 
-# we define starting and ending points, so assuming they are 0 - 20 and sampling is 0.01 we have 2000 points
-# 0, 0.01, 0.02 ... etc
-first_x_range_start, first_x_range_stop = (0, 20)
-second_x_range_start, second_x_range_stop = (20, 40)
-third_x_range_start, third_x_range_stop = (40, 60)
-
-first_x_data, second_x_data, third_x_data = get_three_ranges(first_x_range_start,
-                                                             second_x_range_start,
-                                                             third_x_range_start,
-                                                             third_x_range_stop,
+first_x_data, second_x_data, third_x_data = get_three_ranges(start,
+                                                             first_x_range,
+                                                             second_x_range,
+                                                             third_x_range,
                                                              number_of_samples,
                                                              full_range)
 
@@ -44,8 +35,8 @@ plt.figure(figsize=(11, 6))
 plt.plot(all_x_range[0, :], y_obs[0, :])
 
 # Points between these lines are training points
-plt.axvline(x=second_x_range_start, color='r')
-plt.axvline(x=second_x_range_stop,  color='r')
+plt.axvline(x=first_x_range, color='r')
+plt.axvline(x=second_x_range,  color='r')
 
 plt.xlabel('X value as an argument for model')
 plt.ylabel('Y value of the model')
@@ -55,7 +46,7 @@ plt.ylabel('Y value of the model')
 train_data = pred_prey_model.calculate_model(a, b, second_x_data)
 plt.figure(figsize=(11, 6))
 
-plt.xticks(np.arange(second_x_range_start, second_x_range_stop, 1.0))
+plt.xticks(np.arange(first_x_range, second_x_range, 1.0))
 
 plt.plot(second_x_data[0, :], train_data[0, :])
 plt.xlabel('X value as an argument for function')
@@ -86,7 +77,7 @@ S2 = elfi.Summary(autocov, Y, 2)
 d = elfi.Distance('euclidean', S1, S2)
 
 # Instantiation of the Rejection Algorithm
-rej = elfi.Rejection(d, batch_size=batch_size, seed=seed)
+rej = elfi.Rejection(d, batch_size=batch_size_c, seed=seed)
 
 result = rej.sample(N, quantile=0.001)
 # Print sampled means of parameters
