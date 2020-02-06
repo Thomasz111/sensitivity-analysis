@@ -7,9 +7,9 @@ sample_num = 100
 # data assimilation
 # Inference with rejection sampling
 # batch_size defines how many simulations are performed in each passing through the graph
-batch_size_c = 100
+batch_size_c = 10
 # number of samples
-N = 100
+N = 10
 # This parameter makes range for input parameters
 # (a-width, 2 * width) ---> from a-width to a + width
 width = 0.1

@@ -92,18 +92,28 @@ print(a_result_last)
 print(b_result_last)
 
 y_obs = pred_prey_model.calculate_model(a, b, second_x_data)
-
 plt.figure(figsize=(11, 6))
 plt.plot(y_obs.ravel(), label="observed")
 plt.plot(pred_prey_model.calculate_model(a_result_last, b_result_last, second_x_data).ravel(), label="simulated")
 plt.legend(loc="upper left")
 plt.show()
 
-plt.figure(figsize=(11, 6))
 y_obs = pred_prey_model.calculate_model(a, b, all_x_range)
 plt.figure(figsize=(11, 6))
-plt.plot(y_obs.ravel())
+plt.plot(y_obs.ravel(), label="observed")
 all_results_predicted = pred_prey_model.calculate_model(a_result_last, b_result_last, all_x_range)
-plt.plot(all_results_predicted.ravel())
+plt.plot(all_results_predicted.ravel(), label="simulated")
 plt.legend(loc="upper left")
 plt.show()
+
+
+def calculate_error(start, stop):
+    calculate = 0
+    for i in range(start, stop, 1):
+        calculate += (y_obs[0][i] - all_results_predicted[0][i])**2
+    return calculate
+
+
+print(calculate_error(int(start + 1), int(first_x_range * number_of_samples)))
+print(calculate_error(int(first_x_range * number_of_samples), int(second_x_range * number_of_samples)))
+print(calculate_error(int(second_x_range * number_of_samples), int(third_x_range * number_of_samples)))
