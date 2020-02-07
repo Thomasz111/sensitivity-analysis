@@ -3,6 +3,7 @@ import numpy as np
 import scipy.stats
 import matplotlib.pyplot as plt
 
+from data_assimilation_handy import HANDYDA
 from data_assimilation_models import PredatorPreyModelDA
 from data_assimilation_utils import get_three_ranges
 from simulation_constants import N, batch_size_c, width, first_x_range, second_x_range, third_x_range, sampling, start, \
@@ -12,8 +13,8 @@ seed = 20170530
 np.random.seed(seed)
 
 # We set true parameters
-a = 1.
-b = 0.5
+a = 10000
+b = 3000
 
 number_of_samples = int(1/sampling)
 
@@ -27,7 +28,7 @@ first_x_data, second_x_data, third_x_data = get_three_ranges(start,
                                                              number_of_samples,
                                                              full_range)
 
-pred_prey_model = PredatorPreyModelDA()
+pred_prey_model = HANDYDA()
 
 # Plot the observed sequence for whole range
 y_obs = pred_prey_model.calculate_model(a, b, all_x_range)
@@ -56,8 +57,8 @@ plt.show()
 # MAGIC
 pred_prey_model.second_x_data = second_x_data
 
-a_param = elfi.Prior(scipy.stats.uniform, a-width, 2 * width)
-b_param = elfi.Prior(scipy.stats.uniform, b-width, 2 * width)
+a_param = elfi.Prior(scipy.stats.uniform, a-width*a, 2 * width*a)
+b_param = elfi.Prior(scipy.stats.uniform, b-width*b, 2 * width*b)
 
 # Define the simulator node with the MA2 model ,give the priors to it as arguments.
 Y = elfi.Simulator(pred_prey_model.model, a_param, b_param, observed=train_data)
