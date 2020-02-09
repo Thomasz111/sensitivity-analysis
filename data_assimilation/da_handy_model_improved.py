@@ -1,7 +1,6 @@
 import numpy as np
-from scipy import integrate
 
-from handy_model_improved import create_society_from_values, plot_society
+from handy_model_improved import create_society_from_values
 from simulation_constants import batch_size_c
 
 
