@@ -13,10 +13,11 @@ N = 10
 # This parameter makes range for input parameters
 # (a-width, 2 * width) ---> from a-width to a + width
 width = 0.1
-first_x_range = 20
-second_x_range = 40
-third_x_range = 60
+first_x_range = 200
+second_x_range = 400
+third_x_range = 600
 # We define start, stop and sampling for the function
 start = 0
-stop = 100
-sampling = 0.1
+stop = 1000
+# Must be 1, because of new ODE solver
+sampling = 1

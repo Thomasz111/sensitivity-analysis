@@ -3,8 +3,8 @@ import numpy as np
 import scipy.stats
 import matplotlib.pyplot as plt
 
-from data_assimilation.da_handy_model import HANDYDA
-from data_assimilation.da_utils import get_three_ranges
+from da_handy_model_improved import ImprovedHandyModel
+from da_utils import get_three_ranges
 from simulation_constants import N, batch_size_c, width, first_x_range, second_x_range, third_x_range, sampling, start, \
     stop
 
@@ -12,8 +12,8 @@ seed = 20170530
 np.random.seed(seed)
 
 # We set true parameters
-a = 10000
-b = 3000
+a = 100
+b = 25
 
 number_of_samples = int(1/sampling)
 
@@ -27,7 +27,7 @@ first_x_data, second_x_data, third_x_data = get_three_ranges(start,
                                                              number_of_samples,
                                                              full_range)
 
-pred_prey_model = HANDYDA()
+pred_prey_model = ImprovedHandyModel()
 
 # Plot the observed sequence for whole range
 y_obs = pred_prey_model.calculate_model(a, b, all_x_range)
