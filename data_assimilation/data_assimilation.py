@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from da_handy_model_improved import ImprovedHandyModel
 from da_utils import get_three_ranges
 from simulation_constants import N, batch_size_c, width, first_x_range, second_x_range, third_x_range, sampling, start, \
-    stop
+    stop, quantile
 
 seed = 20170530
 np.random.seed(seed)
@@ -79,7 +79,7 @@ d = elfi.Distance('euclidean', S1, S2)
 # Instantiation of the Rejection Algorithm
 rej = elfi.Rejection(d, batch_size=batch_size_c, seed=seed)
 
-result = rej.sample(N, quantile=0.001)
+result = rej.sample(N, quantile=quantile)
 # Print sampled means of parameters
 
 print(result)
