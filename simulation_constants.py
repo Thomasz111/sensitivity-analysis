@@ -1,7 +1,7 @@
 # sensitivity analysis
-simulation_steps = 100
+simulation_steps = 1000
 start_simulation_time = 0
-end_simulation_time = 15
+end_simulation_time = 1000
 sample_num = 100
 
 # data assimilation

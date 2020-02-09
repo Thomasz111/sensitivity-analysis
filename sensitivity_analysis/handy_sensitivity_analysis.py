@@ -10,10 +10,10 @@ import pylab as p
 problem = {
     'num_vars': 4,
     'names': ['xC', 'xE', 'y', 'w'],
-    'bounds': [[8000.0, 15000.0],
-               [2000.0, 5000.0],
+    'bounds': [[50.0, 150.0],
+               [12.5, 37.5],
                [50.0, 150.0],
-               [50.0, 150.0]]
+               [0.0, 180.0]]
 }
 
 # Generate samples
@@ -37,7 +37,6 @@ def evaluate(variable):
         secondVariableSensitivity.append(Si['S1'][1])
         thirdVariableSensitivity.append(Si['S1'][2])
         forthVariableSensitivity.append(Si['S1'][3])
-        firstAndSecondVariableSensitivity.append(Si['S2'][0, 1])
 
         # mean sensitivity values
     print("############ idicies for {} ###############".format(variable))
@@ -45,7 +44,6 @@ def evaluate(variable):
     print(sum(secondVariableSensitivity[1:])/len(secondVariableSensitivity[1:]))
     print(sum(thirdVariableSensitivity[1:])/len(thirdVariableSensitivity[1:]))
     print(sum(forthVariableSensitivity[1:])/len(forthVariableSensitivity[1:]))
-    print(sum(firstAndSecondVariableSensitivity[1:])/len(firstAndSecondVariableSensitivity[1:]))
 
 # plot results
 def plot_results(v):
@@ -55,7 +53,6 @@ def plot_results(v):
     p.plot(t, secondVariableSensitivity, 'b-', label='xE')
     p.plot(t, thirdVariableSensitivity, 'c-', label='y')
     p.plot(t, forthVariableSensitivity, 'm-', label='w')
-    p.plot(t, firstAndSecondVariableSensitivity, 'g-', label='all')
     p.grid()
     p.legend(loc='best')
     p.xlabel('time')
@@ -71,6 +68,5 @@ if __name__ == "__main__":
         secondVariableSensitivity = []
         thirdVariableSensitivity = []
         forthVariableSensitivity = []
-        firstAndSecondVariableSensitivity = []
         evaluate(v)
         plot_results(v)
