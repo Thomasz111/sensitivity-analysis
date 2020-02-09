@@ -3,9 +3,8 @@ import numpy as np
 import scipy.stats
 import matplotlib.pyplot as plt
 
-from data_assimilation_handy import HANDYDA
-from data_assimilation_models import PredatorPreyModelDA
-from data_assimilation_utils import get_three_ranges
+from data_assimilation.data_assimilation_handy import HANDYDA
+from data_assimilation.data_assimilation_utils import get_three_ranges
 from simulation_constants import N, batch_size_c, width, first_x_range, second_x_range, third_x_range, sampling, start, \
     stop
 

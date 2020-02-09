@@ -1,7 +1,7 @@
 from SALib.sample import saltelli
 from SALib.analyze import sobol
 import numpy as np
-from predator_prey_model import PredatorPreyModel
+from sensitivity_analysis.predator_prey_model import PredatorPreyModel
 from simulation_constants import simulation_steps, start_simulation_time, end_simulation_time, sample_num
 import pylab as p
 
