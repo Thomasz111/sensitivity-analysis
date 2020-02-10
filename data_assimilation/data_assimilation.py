@@ -12,7 +12,8 @@ seed = 20170530
 np.random.seed(seed)
 
 # We set true parameters
-true_values = {'xC': 100, 'xE': 25, 'y': 100, 'w': 100}
+true_values = {'p': 0.005, 'k': 1, 's': 0.0005, 'xC': 100, 'xE': 25, 'y': 100, 'yy': 0.01,
+               'n': 100, 'w': 100, 'd': 0.00005, 'bC': 0.03, 'bE': 0.03, 'am': 0.01, 'aM': 0.07}
 
 number_of_samples = int(1/sampling)
 
@@ -60,9 +61,19 @@ xC = elfi.Prior(scipy.stats.uniform, true_values['xC']-width*true_values['xC'], 
 xE = elfi.Prior(scipy.stats.uniform, true_values['xE']-width*true_values['xE'], 2 * width*true_values['xE'])
 y = elfi.Prior(scipy.stats.uniform, true_values['y']-width*true_values['y'], 2 * width*true_values['y'])
 w = elfi.Prior(scipy.stats.uniform, true_values['w']-width*true_values['w'], 2 * width*true_values['w'])
+k = elfi.Prior(scipy.stats.uniform, true_values['k']-width*true_values['k'], 2 * width*true_values['k'])
+s = elfi.Prior(scipy.stats.uniform, true_values['s']-width*true_values['s'], 2 * width*true_values['s'])
+p = elfi.Prior(scipy.stats.uniform, true_values['p']-width*true_values['p'], 2 * width*true_values['p'])
+yy = elfi.Prior(scipy.stats.uniform, true_values['yy']-width*true_values['yy'], 2 * width*true_values['yy'])
+n = elfi.Prior(scipy.stats.uniform, true_values['n']-width*true_values['n'], 2 * width*true_values['n'])
+d = elfi.Prior(scipy.stats.uniform, true_values['d']-width*true_values['d'], 2 * width*true_values['d'])
+bC = elfi.Prior(scipy.stats.uniform, true_values['bC']-width*true_values['bC'], 2 * width*true_values['bC'])
+bE = elfi.Prior(scipy.stats.uniform, true_values['bE']-width*true_values['bE'], 2 * width*true_values['bE'])
+am = elfi.Prior(scipy.stats.uniform, true_values['am']-width*true_values['am'], 2 * width*true_values['am'])
+aM = elfi.Prior(scipy.stats.uniform, true_values['aM']-width*true_values['aM'], 2 * width*true_values['aM'])
 
 # Define the simulator node with the MA2 model ,give the priors to it as arguments.
-Y = elfi.Simulator(pred_prey_model.model, xC, xE, y, w, observed=train_data)
+Y = elfi.Simulator(pred_prey_model.model, p, k, s, xC, xE, y, yy, n, d, w, bC, bE, am, aM, observed=train_data)
 
 
 # Autocovariances as the summary statistics
