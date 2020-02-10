@@ -12,8 +12,7 @@ seed = 20170530
 np.random.seed(seed)
 
 # We set true parameters
-a = 100
-b = 25
+true_values = {'xC': 100, 'xE': 25, 'y': 100, 'w': 100}
 
 number_of_samples = int(1/sampling)
 
@@ -30,7 +29,7 @@ first_x_data, second_x_data, third_x_data = get_three_ranges(start,
 pred_prey_model = ImprovedHandyModel()
 
 # Plot the observed sequence for whole range
-y_obs = pred_prey_model.calculate_model(a, b, all_x_range)
+y_obs = pred_prey_model.calculate_model(true_values, all_x_range)
 plt.figure(figsize=(11, 6))
 plt.plot(all_x_range[0, :], y_obs[0, :])
 
@@ -43,7 +42,7 @@ plt.ylabel('Y value of the model')
 
 
 # We plot only training part
-train_data = pred_prey_model.calculate_model(a, b, second_x_data)
+train_data = pred_prey_model.calculate_model(true_values, second_x_data)
 plt.figure(figsize=(11, 6))
 
 plt.xticks(np.arange(first_x_range, second_x_range, 1.0))
@@ -56,11 +55,14 @@ plt.show()
 # MAGIC
 pred_prey_model.second_x_data = second_x_data
 
-a_param = elfi.Prior(scipy.stats.uniform, a-width*a, 2 * width*a)
-b_param = elfi.Prior(scipy.stats.uniform, b-width*b, 2 * width*b)
+# has to be this way, so the keys in result dict have parameter names
+xC = elfi.Prior(scipy.stats.uniform, true_values['xC']-width*true_values['xC'], 2 * width*true_values['xC'])
+xE = elfi.Prior(scipy.stats.uniform, true_values['xE']-width*true_values['xE'], 2 * width*true_values['xE'])
+y = elfi.Prior(scipy.stats.uniform, true_values['y']-width*true_values['y'], 2 * width*true_values['y'])
+w = elfi.Prior(scipy.stats.uniform, true_values['w']-width*true_values['w'], 2 * width*true_values['w'])
 
 # Define the simulator node with the MA2 model ,give the priors to it as arguments.
-Y = elfi.Simulator(pred_prey_model.model, a_param, b_param, observed=train_data)
+Y = elfi.Simulator(pred_prey_model.model, xC, xE, y, w, observed=train_data)
 
 
 # Autocovariances as the summary statistics
@@ -85,23 +87,23 @@ result = rej.sample(N, quantile=quantile)
 print(result)
 
 # Final result of mean samples
-b_result_last = result.samples['b_param'].mean()
-a_result_last = result.samples['a_param'].mean()
+mean_results = {k: v.mean() for k, v in result.samples.items()}
 
-print(a_result_last)
-print(b_result_last)
+for key, value in mean_results.items():
+    print('{0}: {1}'.format(key, value))
 
-y_obs = pred_prey_model.calculate_model(a, b, second_x_data)
+y_obs = pred_prey_model.calculate_model(true_values, second_x_data)
 plt.figure(figsize=(11, 6))
 plt.plot(y_obs.ravel(), label="observed")
-plt.plot(pred_prey_model.calculate_model(a_result_last, b_result_last, second_x_data).ravel(), label="simulated")
+plt.plot(pred_prey_model.calculate_model(mean_results, second_x_data).ravel(),
+         label="simulated")
 plt.legend(loc="upper left")
 plt.show()
 
-y_obs = pred_prey_model.calculate_model(a, b, all_x_range)
+y_obs = pred_prey_model.calculate_model(true_values, all_x_range)
 plt.figure(figsize=(11, 6))
 plt.plot(y_obs.ravel(), label="observed")
-all_results_predicted = pred_prey_model.calculate_model(a_result_last, b_result_last, all_x_range)
+all_results_predicted = pred_prey_model.calculate_model(mean_results, all_x_range)
 plt.plot(all_results_predicted.ravel(), label="simulated")
 plt.legend(loc="upper left")
 plt.show()
