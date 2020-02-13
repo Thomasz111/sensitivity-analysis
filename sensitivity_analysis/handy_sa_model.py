@@ -11,6 +11,7 @@ class Handy_SA:
 
     def setup_model(self, values):
             for i, X in enumerate(values):
+                print("Model setup: {}".format(i))
                 society = create_society_from_values(
                     (X[0], X[1], X[2], X[3], X[4], X[5], X[6], X[7], X[8], X[9], X[10], X[11], X[12], X[13], 0))
 
