@@ -11,9 +11,11 @@ class Handy_SA:
 
     def setup_model(self, values):
             for i, X in enumerate(values):
-
                 society = create_society_from_values(
-                    (5e-3, 1, 5e-4, X[0], X[1], X[2], 1e-2, 100, 3.0e-5, X[3], 3e-2, 3e-2, 1e-2, 7e-2, 0))
+                    (X[0], X[1], X[2], X[3], X[4], X[5], X[6], X[7], X[8], X[9], X[10], X[11], X[12], X[13], 0))
+
+                # society = create_society_from_values(
+                #     (5e-3, 1, 5e-4, X[0], X[1], X[2], 1e-2, 100, 3.0e-5, X[3], 3e-2, 3e-2, 1e-2, 7e-2, 0))
                 time, commoner_population, elite_population, nature, wealth, carrying_capacity = \
                     society.evolve(end_simulation_time)
 

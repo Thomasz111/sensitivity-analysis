@@ -3,8 +3,8 @@ import numpy as np
 import scipy.stats
 import matplotlib.pyplot as plt
 
-from da_handy_model_improved import ImprovedHandyModel
-from da_utils import get_three_ranges
+from data_assimilation.da_handy_model_improved import ImprovedHandyModel
+from data_assimilation.da_utils import get_three_ranges
 from simulation_constants import N, batch_size_c, width, first_x_range, second_x_range, third_x_range, sampling, start, \
     stop, quantile
 
