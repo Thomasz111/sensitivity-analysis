@@ -10,7 +10,7 @@ sample_num = 100
 batch_size_c = 10
 # number of samples
 N = 10
-quantile = 0.001
+# quantile = 0.1
 # This parameter makes range for input parameters
 # (a-width, 2 * width) ---> from a-width to a + width
 width = 0.1
