@@ -78,7 +78,7 @@ def evaluate(variable):
     d_average = sum(tenthVariableSensitivity[1:]) / len(tenthVariableSensitivity[1:])
     bC_average = sum(eleventhVariableSensitivity[1:]) / len(eleventhVariableSensitivity[1:])
     bE_average = sum(twelfthVariableSensitivity[1:]) / len(twelfthVariableSensitivity[1:])
-    am_average = sum(thirdVariableSensitivity[1:]) / len(thirdVariableSensitivity[1:])
+    am_average = sum(thirteenthVariableSensitivity[1:]) / len(thirteenthVariableSensitivity[1:])
     aM_average = sum(fourteenthVariableSensitivity[1:]) / len(fourteenthVariableSensitivity[1:])
 
     print(p_average)
@@ -115,7 +115,7 @@ def evaluate(variable):
 
     csv_columns = list(results.keys())
 
-    with open("data/SA_results_{}.csv".format(variable), 'w') as csvfile:
+    with open("data/SA_results_{}_{}.csv".format(variable,sample_num), 'w') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
         writer.writeheader()
         writer.writerow(results)
@@ -146,7 +146,7 @@ def plot_results(v):
     p.title('Sensitivity for: {}'.format(v))
     fig = p.gcf()
     p.show()
-    fig.savefig("plot/sesitivity_{}.png".format(v), bbox_inches='tight')
+    fig.savefig("plot/sesitivity_{}_{}.png".format(v, sample_num), bbox_inches='tight')
 
 
 if __name__ == "__main__":
